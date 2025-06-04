@@ -1,0 +1,29 @@
+TODO: Stop-and-Wait RDT(Reliable Data Transfer) Protocol
+
+1. RDT based to Stop-and_Wait
+    1000 Byte size Packet
+    Sender -> Receiver : Data packet, exit(EOT) packet
+    Receiver -> Sender : ACK packet
+
+2. packet struction definition
+    packet class definition (struct or class)
+    header field
+        type : DATA || ACK || EOT
+        seqNum : transfering packet number (start 0)
+        ackNum : checking seqNum
+        length : Data length (length of ACK and EOT is 0)
+    
+3. Stop-and-Wait Core logic
+    1. After Sender sends 1 packet, sender waits ACK packet.
+    2. when Time is outed, this packet should retransmitted.
+    3. when Receiver is receive duplicated packet, this packet is ignored & Receiver sends ACK
+
+4. Packet loss emulation
+    Sender : ACK packet drop percent : when sender receive ack packet
+    Receiver : Data packet drop percent : when receiver receive data packet
+        -> 0.0 ~ 1.0 discard
+    
+5. Timer (Timeout)
+    Use alarm(timeoutInterval) system call
+    signal handler : when time is out, retransmmmition packet.
+
