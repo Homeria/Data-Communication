@@ -13,7 +13,7 @@
 
 
 void sigalrm_handler(int sig) {
-    std::cerr << "[TIMEOUT] Alarming!" << std::endl;
+    // std::cerr << "[TIMEOUT] Alarming!" << std::endl;
 }
 
 void set_sigalrm_handler() {
@@ -27,7 +27,6 @@ void set_sigalrm_handler() {
 void Sender::run(const std::string& filePath, const std::string& destIP, int destPort) {
 
     
-
     sendFile(filePath, destIP, destPort);
 
 }
@@ -43,36 +42,48 @@ bool Sender::test(const std::string& destIP, int destPort) {
 
 bool Sender::sendDataPacketRDT(Packet pkt, const std::string& destIP, int destPort) {
 
-    
+    std::cout << "\n[Send Data Packet] " << "================" << std::endl;
 
-    std::cout << "[Send] " << pkt.toString() << std::endl;
-
-    socket.sendTo(pkt.serialize(), destIP, destPort);
 
     set_sigalrm_handler();
-    alarm(TIMEOUT_TIME);
 
-    std::vector<uint8_t> ackBuffer;
-    std::string senderIP;
-    int senderPort;
+    while (true) {
 
-    bool ackReceived = socket.receiveFrom(ackBuffer, senderIP, senderPort);
+        socket.sendTo(pkt.serialize(), destIP, destPort);
 
-    alarm(0);
+        std::cout << "[Send] " << pkt.toString() << std::endl;
 
-    if (!ackReceived) {
-        std::cerr << "[TIMEOUT] Ack not received for seqNum=" << pkt.seqNum << std::endl;
-        
-        return false;
+        alarm(TIMEOUT_TIME);
+
+        std::vector<uint8_t> ackBuffer;
+        std::string senderIP;
+        int senderPort;
+
+        bool ackReceived = socket.receiveFrom(ackBuffer, senderIP, senderPort);
+        bool isDropped = shouldDrop(PACKET_DROP);
+
+        if (!ackReceived) {
+
+            std::cerr << "[TIMEOUT] Ack not received for seqNum=" << pkt.seqNum << std::endl;
+            alarm(0);
+            continue;
+
+        }
+
+        Packet ackPkt = Packet::deserialize(ackBuffer);
+
+        if (isDropped) {
+
+            std::cerr << "[DROPPED] " << ackPkt.toString() << std::endl;
+            continue;
+
+        } else{
+
+            std::cout << "[Receive] " << ackPkt.toString() << "\n" << std::endl;
+            break;
+
+        }
     }
-
-    if (shouldDrop(PACKET_DROP)) {
-        std::cerr << "[DROPPED] Ack Packet is Dropped : " << pkt.seqNum << std::endl;
-        return false;
-    }
-
-    Packet ackPkt = Packet::deserialize(ackBuffer);
-    std::cout << "[Receive] " << ackPkt.toString() << std::endl;
 
     return true;
 }
@@ -92,25 +103,28 @@ void Sender::sendFile(const std::string& filePath, const std::string& destIP, in
         return;
     }
 
-    char buffer[54];
+    char buffer[50];
     int seqNum = 0;
 
     // 파일을 끝까지 읽을 때까지 반복
 
     while (inFile.read(buffer, sizeof(buffer)) || inFile.gcount() > 0) {
 
-        int dataSize = inFile.gcount();
+        std::streamsize bytesRead = inFile.gcount();
 
-        Packet pkt(DATA, seqNum, buffer);
+        Packet pkt(DATA, seqNum, std::string(buffer, bytesRead));
 
         bool isSent = sendDataPacketRDT(pkt, destIP, destPort);
         if (isSent) {
             seqNum++;
         } else {
             std::cout << "[ERROR] The Packet not sent" << std::endl;
+            continue;
         }
         
     }
+
+    
     
     Packet pktEOT(EOT, seqNum);
     std::cout << "[Send] " << pktEOT.toString() << std::endl;

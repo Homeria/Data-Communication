@@ -2,6 +2,7 @@
 
 #include <string>
 #include "UDPSocket.h"
+#include "Packet.h"
 
 class Receiver {
 public:
@@ -13,10 +14,12 @@ private:
     int senderPort;
 
     bool test();
+
     bool bindAndWait(int listenPort);
-    void receiveGreeting();
-    std::string receiveFileName();
-    void sendOK();
+
     void receiveFile(const std::string& outputFile);
-    void sendWellDone();
+
+    Packet receiveDataPacketRDT(int seqNum, std::string& senderIP, int& senderPort);
+    void sendAckPacket(int ackNum, std::string senderIP, int senderPort);
+
 };

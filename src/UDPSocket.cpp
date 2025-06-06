@@ -116,13 +116,13 @@ bool UDPSocket::receiveFrom(std::vector<uint8_t>& buffer, std::string& senderIP,
 
     if (bytesReceived < 0) {
         if (errno == EINTR) {
-            std::cerr << "[TIMEOUT] recvfrom interrupted by signal (EINTR)" << std::endl;
+            // std::cerr << "[TIMEOUT] recvfrom interrupted by signal (EINTR)" << std::endl;
             return false; // 타임아웃 상황
         }
         if (errno == EAGAIN || errno == EWOULDBLOCK) {
-            std::cerr << "[TIMEOUT] recvfrom() timed out" << std::endl;
+            // std::cerr << "[TIMEOUT] recvfrom() timed out" << std::endl;
         } else {
-            std::cerr << "[ERROR] recvfrom() failed" << std::endl;
+            // std::cerr << "[ERROR] recvfrom() failed" << std::endl;
         }
         return false;
     }
