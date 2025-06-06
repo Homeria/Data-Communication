@@ -8,7 +8,7 @@
 #include <csignal>
 #include <string.h>
 
-#define PACKET_DROP 0
+#define PACKET_DROP 0.1
 #define TIMEOUT_TIME 2
 
 
@@ -59,8 +59,20 @@ bool Sender::sendDataPacketRDT(Packet pkt, const std::string& destIP, int destPo
         std::string senderIP;
         int senderPort;
 
-        bool ackReceived = socket.receiveFrom(ackBuffer, senderIP, senderPort);
-        bool isDropped = shouldDrop(PACKET_DROP);
+        bool ackReceived = false;
+
+        while (true) {
+
+            ackReceived = socket.receiveFrom(ackBuffer, senderIP, senderPort);
+            bool isDropped = shouldDrop(PACKET_DROP);
+            if (isDropped) {
+                std::cerr << "[DROPPED] AckPacket" << std::endl;
+                continue;
+            } else {
+                alarm(0);
+                break;
+            }
+        }
 
         if (!ackReceived) {
 
@@ -72,17 +84,9 @@ bool Sender::sendDataPacketRDT(Packet pkt, const std::string& destIP, int destPo
 
         Packet ackPkt = Packet::deserialize(ackBuffer);
 
-        if (isDropped) {
+        std::cout << "[Receive] " << ackPkt.toString() << "\n" << std::endl;
+        break;
 
-            std::cerr << "[DROPPED] " << ackPkt.toString() << std::endl;
-            continue;
-
-        } else{
-
-            std::cout << "[Receive] " << ackPkt.toString() << "\n" << std::endl;
-            break;
-
-        }
     }
 
     return true;

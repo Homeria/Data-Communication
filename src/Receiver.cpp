@@ -77,6 +77,7 @@ Packet Receiver::receiveDataPacketRDT(int seqNum, std::string& senderIP, int& se
                 std::cerr << "[DROPPED] " << dataPkt.toString() << std::endl;
             } else if (isDuplicate) {
                 std::cerr << "[DUPLICATE] " << dataPkt.toString() << std::endl;
+                sendAckPacket(seqNum, ip, port);
             } else if (!isReceived) {
                 std::cerr << "[ERROR] Failed to receive data packet." << std::endl;
             } else {
@@ -119,7 +120,7 @@ void Receiver::receiveFile(const std::string& outputFile) {
 
 
         }
-        expectedSeqNum = dataPkt.seqNum;
+        expectedSeqNum = dataPkt.seqNum + 1;
 
         outFile.write(dataPkt.getData().data(), dataPkt.length);
         std::cout << "[Write] seqNum=" << dataPkt.seqNum << std::endl;
