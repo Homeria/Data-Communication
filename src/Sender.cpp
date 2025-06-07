@@ -11,6 +11,8 @@
 #define PACKET_DROP 0.1
 #define TIMEOUT_TIME 2
 
+#define EOT_RETRANSMISSION 5
+
 
 void sigalrm_handler(int sig) {
     // std::cerr << "[TIMEOUT] Alarming!" << std::endl;
@@ -51,41 +53,36 @@ bool Sender::sendDataPacketRDT(Packet pkt, const std::string& destIP, int destPo
 
         socket.sendTo(pkt.serialize(), destIP, destPort);
 
-        std::cout << "[Send] " << pkt.toString() << std::endl;
+        printLog(pkt, "SEND DATA");
 
         alarm(TIMEOUT_TIME);
 
         std::vector<uint8_t> ackBuffer;
         std::string senderIP;
         int senderPort;
+        Packet ackPkt;
 
-        bool ackReceived = false;
+        bool ackReceived = socket.receiveFrom(ackBuffer, senderIP, senderPort);
+        bool isDropped = shouldDrop(PACKET_DROP);
 
-        while (true) {
+        if (ackReceived) {
 
-            ackReceived = socket.receiveFrom(ackBuffer, senderIP, senderPort);
-            bool isDropped = shouldDrop(PACKET_DROP);
+            ackPkt = Packet::deserialize(ackBuffer);
+            
             if (isDropped) {
-                std::cerr << "[DROPPED] AckPacket" << std::endl;
-                continue;
+                printError(pkt, "DROPPED ACK");
+                ackReceived = socket.receiveFrom(ackBuffer, senderIP, senderPort);
             } else {
                 alarm(0);
+                printLog(ackPkt, "RECEIVE ACK");
                 break;
+                
             }
-        }
-
-        if (!ackReceived) {
-
-            std::cerr << "[TIMEOUT] Ack not received for seqNum=" << pkt.seqNum << std::endl;
+        } else {
+            printError(pkt, "TIMEOUT DATA");
             alarm(0);
             continue;
-
         }
-
-        Packet ackPkt = Packet::deserialize(ackBuffer);
-
-        std::cout << "[Receive] " << ackPkt.toString() << "\n" << std::endl;
-        break;
 
     }
 
@@ -103,7 +100,7 @@ void Sender::sendFile(const std::string& filePath, const std::string& destIP, in
     // if opening file is failed
     std::ifstream inFile(filePath, std::ios::binary);
     if (!inFile) {
-        std::cerr << "File open failed!" << std::endl;
+        printError(Packet(), "File open failed");
         return;
     }
 
@@ -122,20 +119,29 @@ void Sender::sendFile(const std::string& filePath, const std::string& destIP, in
         if (isSent) {
             seqNum++;
         } else {
-            std::cout << "[ERROR] The Packet not sent" << std::endl;
+            printError(pkt, "The Packet not sent");
             continue;
         }
         
     }
 
-    
-    
-    Packet pktEOT(EOT, seqNum);
-    std::cout << "[Send] " << pktEOT.toString() << std::endl;
-    socket.sendTo(pktEOT.serialize(), destIP, destPort);
+    int count = 0;
+    while (count < EOT_RETRANSMISSION) {
+        
+        count++;
 
+        Packet pktEOT(EOT, seqNum);
+
+        bool isSent = sendDataPacketRDT(pktEOT, destIP, destPort);
+        if (isSent) {
+            std::cout << "Sending File and \"Finish\" is succeed." << std::endl;
+            printLog(pktEOT, "SEND EOT");
+            break;
+        } else {
+            continue;
+        }
+    }
+    
     inFile.close();
-
-    std::cout << "Sending File and \"Finish\" is succeed." << std::endl;
 
 }

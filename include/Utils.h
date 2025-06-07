@@ -4,6 +4,7 @@
 #include <string>
 #include "Packet.h"
 bool shouldDrop(double probability);
-void printLog(const Packet& pkt, const std::string& message);
+void printLog(const Packet& pkt, const std::string& type);
+void printError(const Packet& pkt, const std::string& type);
 
 #endif

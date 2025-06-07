@@ -21,5 +21,6 @@ private:
 
     Packet receiveDataPacketRDT(int seqNum, std::string& senderIP, int& senderPort);
     void sendAckPacket(int ackNum, std::string senderIP, int senderPort);
+    void sendEOTAckPacket(int seqNum, std::string senderIP, int senderPort);
 
 };

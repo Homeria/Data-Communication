@@ -14,6 +14,10 @@ bool shouldDrop(double probability) {
     return dis(gen) < probability;
 }
 
-void printLog(const Packet& pkt, const std::string& message) {
-    std::cout << "[LOG] " << message << " : " << pkt.toString() << std::endl;
+void printLog(const Packet& pkt, const std::string& type) {
+    std::cout << "[" << type << "] : " << pkt.toString() << std::endl;
+}
+
+void printError(const Packet& pkt, const std::string& type) {
+    std::cerr << "[" << type << "] : " << pkt.toString() << std::endl;
 }
