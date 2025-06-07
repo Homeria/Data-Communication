@@ -4,6 +4,10 @@
 #include <vector>
 #include <sstream>
 #include <arpa/inet.h>
+#include <iomanip>
+#include <cstring>
+
+#define MAX_DATA_SIZE 51
 
 enum PacketType {
     DATA = 0,

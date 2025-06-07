@@ -1,12 +1,18 @@
 #define RECEIVER_H
 
-#include <string>
+#include <fstream>
+#include <iostream>
+#include <csignal>
+#include <unistd.h>
+#include <string.h>
+
 #include "UDPSocket.h"
 #include "Packet.h"
+#include "Utils.h"
 
 class Receiver {
 public:
-    void run(const std::string& outputFile, int listenPort);
+    void run(const std::string& outputFile, int listenPort, double dataDropProb = 0.0);
 
 private:
     UDPSocket socket;

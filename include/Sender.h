@@ -1,13 +1,18 @@
 #define SENDER_H
 
-#include <string>
-#include <random>
 #include "UDPSocket.h"
 #include "Packet.h"
+#include "Utils.h"
+
+#include <fstream>
+#include <iostream>
+#include <unistd.h>
+#include <csignal>
+#include <string.h>
 
 class Sender {
 public:
-    void run(const std::string& filePath, const std::string& destIP, int destPort);
+    void run(const std::string& filePath, const std::string& destIP, int destPort, double ackDropProb = 0.0, int timeout = 2);
 
 private:
 

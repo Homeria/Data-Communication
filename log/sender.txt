@@ -1,0 +1,189 @@
+[23:08:36:289] [SEND DATA]
+  seqNum: 0, ackNum: 0, length: 51
+  data: 583414617363414109914626466753214276675197471445649
+
+[23:08:36:289] [RECEIVE ACK]
+  seqNum: 0, ackNum: 0, length: 0
+  data: 
+
+[23:08:36:290] [SEND DATA]
+  seqNum: 1, ackNum: 0, length: 51
+  data: 756480268750304478132427660268420411076611586262671
+
+[23:08:36:290] [RECEIVE ACK]
+  seqNum: 0, ackNum: 1, length: 0
+  data: 
+
+[23:08:36:290] [SEND DATA]
+  seqNum: 2, ackNum: 0, length: 51
+  data: 355593220283527936608718238057374949024261240511050
+
+[23:08:36:290] [RECEIVE ACK]
+  seqNum: 0, ackNum: 2, length: 0
+  data: 
+
+[23:08:36:290] [SEND DATA]
+  seqNum: 3, ackNum: 0, length: 51
+  data: 648608259477162935972394801818739214561263412457624
+
+[23:08:36:290] [RECEIVE ACK]
+  seqNum: 0, ackNum: 3, length: 0
+  data: 
+
+[23:08:36:290] [SEND DATA]
+  seqNum: 4, ackNum: 0, length: 51
+  data: 282814263728730288941823047754784498746516130001258
+
+[23:08:36:291] [RECEIVE ACK]
+  seqNum: 0, ackNum: 4, length: 0
+  data: 
+
+[23:08:36:291] [SEND DATA]
+  seqNum: 5, ackNum: 0, length: 51
+  data: 296983549813612462171275738299648801453187443124548
+
+[23:08:36:291] [RECEIVE ACK]
+  seqNum: 0, ackNum: 5, length: 0
+  data: 
+
+[23:08:36:291] [SEND DATA]
+  seqNum: 6, ackNum: 0, length: 51
+  data: 707144254718340516768099857677356469638487447981064
+
+[23:08:38:291] [TIMEOUT DATA]
+  seqNum: 6, ackNum: 0, length: 51
+  data: 707144254718340516768099857677356469638487447981064
+
+[23:08:38:292] [SEND DATA]
+  seqNum: 6, ackNum: 0, length: 51
+  data: 707144254718340516768099857677356469638487447981064
+
+[23:08:38:292] [RECEIVE ACK]
+  seqNum: 0, ackNum: 6, length: 0
+  data: 
+
+[23:08:38:292] [SEND DATA]
+  seqNum: 7, ackNum: 0, length: 51
+  data: 069254582270383352293739340974964681334256294087305
+
+[23:08:38:292] [RECEIVE ACK]
+  seqNum: 0, ackNum: 7, length: 0
+  data: 
+
+[23:08:38:292] [SEND DATA]
+  seqNum: 8, ackNum: 0, length: 51
+  data: 925527004895952000435605161225148022143022523624749
+
+[23:08:38:292] [RECEIVE ACK]
+  seqNum: 0, ackNum: 8, length: 0
+  data: 
+
+[23:08:38:292] [SEND DATA]
+  seqNum: 9, ackNum: 0, length: 51
+  data: 534305090045957736360194903741186691680282465798572
+
+[23:08:38:293] [RECEIVE ACK]
+  seqNum: 0, ackNum: 9, length: 0
+  data: 
+
+[23:08:38:293] [SEND DATA]
+  seqNum: 10, ackNum: 0, length: 51
+  data: 185664457899636467631113135467560585710146310891734
+
+[23:08:38:293] [RECEIVE ACK]
+  seqNum: 0, ackNum: 10, length: 0
+  data: 
+
+[23:08:38:293] [SEND DATA]
+  seqNum: 11, ackNum: 0, length: 51
+  data: 657990643298358075424607410456304683153955462023120
+
+[23:08:38:293] [RECEIVE ACK]
+  seqNum: 0, ackNum: 11, length: 0
+  data: 
+
+[23:08:38:293] [SEND DATA]
+  seqNum: 12, ackNum: 0, length: 51
+  data: 589747389497990281241881033503339289020749185430481
+
+[23:08:38:293] [RECEIVE ACK]
+  seqNum: 0, ackNum: 12, length: 0
+  data: 
+
+[23:08:38:293] [SEND DATA]
+  seqNum: 13, ackNum: 0, length: 51
+  data: 104017148479830195353909532865625740876237359123641
+
+[23:08:40:294] [TIMEOUT DATA]
+  seqNum: 13, ackNum: 0, length: 51
+  data: 104017148479830195353909532865625740876237359123641
+
+[23:08:40:294] [SEND DATA]
+  seqNum: 13, ackNum: 0, length: 51
+  data: 104017148479830195353909532865625740876237359123641
+
+[23:08:40:294] [RECEIVE ACK]
+  seqNum: 0, ackNum: 13, length: 0
+  data: 
+
+[23:08:40:294] [SEND DATA]
+  seqNum: 14, ackNum: 0, length: 51
+  data: 063098121089214397921053520403069111947323722833597
+
+[23:08:40:294] [RECEIVE ACK]
+  seqNum: 0, ackNum: 14, length: 0
+  data: 
+
+[23:08:40:294] [SEND DATA]
+  seqNum: 15, ackNum: 0, length: 51
+  data: 902821607644943872851922262033021661147410552797974
+
+[23:08:40:294] [RECEIVE ACK]
+  seqNum: 0, ackNum: 15, length: 0
+  data: 
+
+[23:08:40:295] [SEND DATA]
+  seqNum: 16, ackNum: 0, length: 51
+  data: 469066249255259474163529694822607903361184867272057
+
+[23:08:40:295] [RECEIVE ACK]
+  seqNum: 0, ackNum: 16, length: 0
+  data: 
+
+[23:08:40:295] [SEND DATA]
+  seqNum: 17, ackNum: 0, length: 51
+  data: 053909961805163160681354801259357387444678009749078
+
+[23:08:40:295] [RECEIVE ACK]
+  seqNum: 0, ackNum: 17, length: 0
+  data: 
+
+[23:08:40:295] [SEND DATA]
+  seqNum: 18, ackNum: 0, length: 51
+  data: 638602411893652837102362178122250586044382062879071
+
+[23:08:40:295] [RECEIVE ACK]
+  seqNum: 0, ackNum: 18, length: 0
+  data: 
+
+[23:08:40:295] [SEND DATA]
+  seqNum: 19, ackNum: 0, length: 32
+  data: 1535068816049357756338267373275
+
+
+[23:08:40:295] [RECEIVE ACK]
+  seqNum: 0, ackNum: 19, length: 0
+  data: 
+
+[23:08:40:295] [SEND DATA]
+  seqNum: 20, ackNum: 0, length: 0
+  data: 
+
+[23:08:40:296] [RECEIVE ACK]
+  seqNum: 0, ackNum: 20, length: 0
+  data: 
+
+[23:08:40:296] [SEND EOT]
+  seqNum: 20, ackNum: 0, length: 0
+  data: 
+

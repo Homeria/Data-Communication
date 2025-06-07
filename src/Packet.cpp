@@ -1,14 +1,21 @@
 #include "Packet.h"
-#include <iomanip>
-#include <cstring>
 
-#define MAX_DATA_SIZE 50
-
-// Constructor
+/**
+ * Default constructor initializes a Packet with default values.
+ * The default type is DATA (0), seqNum and ackNum are 0, length is 0, and data is an empty string.
+ * @return A Data Packet object with default values.
+ */
 Packet::Packet(int type , int seqNum, const std::string& data)
     : type(type), seqNum(seqNum), ackNum(0), length(data.size()), data(data)
 {}
 
+/**
+ * Constructor for ACK or EOT packets.
+ * If type is ACK, it initializes ackNum with the provided number.
+ * If type is EOT, it initializes seqNum with the provided number.
+ * @param type The type of the packet (ACK or EOT).
+ * @param num The sequence number or acknowledgment number.
+ */
 Packet::Packet(int type, int num)
     : type(type), seqNum(0), ackNum(0), length(0), data("")
 {
@@ -19,7 +26,17 @@ Packet::Packet(int type, int num)
     }
 }
 
+/**
+ * Serialize the Packet into a byte vector.
+ * The serialization format is:
+ * - 4 bytes for type (int)
+ * - 4 bytes for seqNum (int)
+ * - 4 bytes for ackNum (int)
+ * - 4 bytes for length (int)
+ * - length bytes for data (std::string)
+ */
 std::vector<uint8_t> Packet::serialize() const {
+
     std::vector<uint8_t> buffer;
 
     // type
@@ -44,7 +61,17 @@ std::vector<uint8_t> Packet::serialize() const {
     return buffer;
 }
 
+/**
+ * Deserialize a byte vector into a Packet object.
+ * The expected format is:
+ * - 4 bytes for type (int)
+ * - 4 bytes for seqNum (int)
+ * - 4 bytes for ackNum (int)
+ * - 4 bytes for length (int)
+ * - length bytes for data (std::string)
+ */
 Packet Packet::deserialize(const std::vector<uint8_t>& buffer) {
+    
     if (buffer.size() < 8) {
         throw std::runtime_error("Buffer too small to deserialize");
     }
@@ -72,7 +99,12 @@ Packet Packet::deserialize(const std::vector<uint8_t>& buffer) {
 
 }
 
-
+/**
+ * Convert the Packet to a string representation for logging or debugging.
+ * The format is:
+ * "Packet { type: <type>, seqNum: <seqNum>, ackNum: <ackNum>, length: <length>, data: "<data>" }"
+ * * @return A string representation of the Packet.
+ */
 std::string Packet::toString() const {
     std::ostringstream oss;
     oss << "Packet { "
@@ -84,6 +116,10 @@ std::string Packet::toString() const {
     return oss.str();
 }
 
+/**
+ * Get the data field of the Packet.
+ * @return The data as a string.
+ */
 std::string Packet::getData() const {
     return this->data;
 }

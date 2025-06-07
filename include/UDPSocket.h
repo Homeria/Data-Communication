@@ -1,8 +1,16 @@
 #define UDP_SOCKET_H
 
-#include <string>
-#include <vector>
 #include <netinet/in.h>
+#include <sys/socket.h>
+#include <arpa/inet.h>  
+#include <unistd.h>   
+
+#include <cstring>
+#include <vector>
+#include <iostream> 
+
+#include "Packet.h"
+
 
 class UDPSocket {
 public:
