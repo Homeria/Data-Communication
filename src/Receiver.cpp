@@ -40,7 +40,6 @@ void Receiver::run(const std::string& outputFile, int listenPort, double dataDro
     PACKET_DROP = dataDropProb;
     initLogFiles(false);
     
-    std::cout << "[START] 0. Set and Bind socket ===========================<<" << std::endl;
     if (!bindAndWait(listenPort)) {
         return;
     } else {

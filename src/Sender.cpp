@@ -150,8 +150,7 @@ void Sender::sendFile(const std::string& filePath, const std::string& destIP, in
     while (inFile.read(buffer, sizeof(buffer)) || inFile.gcount() > 0) {
 
         std::streamsize bytesRead = inFile.gcount();
-        std::cout << "bytesRead: " << bytesRead << std::endl;
-        if (bytesRead > 1) {
+        if (bytesRead > 0) {
 
             Packet pkt(DATA, seqNum, std::string(buffer, bytesRead));
             bool isSent = sendDataPacketRDT(pkt, destIP, destPort);

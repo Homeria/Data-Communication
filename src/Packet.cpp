@@ -107,12 +107,20 @@ Packet Packet::deserialize(const std::vector<uint8_t>& buffer) {
  */
 std::string Packet::toString() const {
     std::ostringstream oss;
-    oss << "Packet { "
-        << "type: " << type << ", "
-        << "seqNum: " << seqNum << ", "
-        << "ackNum: " << ackNum << ", "
-        << "length: " << length << ", "
-        << "data: \"" << data << "\" }";
+
+    // oss << "Packet { "
+    //     << "type: " << type << ", "
+    //     << "seqNum: " << seqNum << ", "
+    //     << "ackNum: " << ackNum << ", "
+    //     << "length: " << length << ","
+    //     << "\ndata:\n\"" << data << "\" }";
+
+    oss << "Packet {\n"
+        << "  type : " << type << "," 
+        << "\n" << "  seqNum : " << seqNum << ","
+        << "\n" << "  ackNum : " << ackNum << ","
+        << "\n" <<  "  length : " << length << ","
+        << "\n" << "  data : " << data << "\n}" << std::endl;
     return oss.str();
 }
 

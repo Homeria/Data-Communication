@@ -27,24 +27,32 @@ void printError(const Packet& pkt, const std::string& type) {
  */
 void writeLog(Packet pkt, const std::string& eventType, bool isSender) {
     std::string logFilePath;
+    std::string packetLogFilePath;
     if (isSender) {
-        logFilePath = "log/sender.txt";
+        logFilePath = "log/sender/event_log.txt";
+        packetLogFilePath = "log/sender/packet_log.txt";
     } else {
-        logFilePath = "log/receiver.txt";
+        logFilePath = "log/receiver/event_log.txt";
+        packetLogFilePath = "log/receiver/packet_log.txt";
     }
     std::ofstream logFile(logFilePath, std::ios::app);
-    if (!logFile) return;
+    std::ofstream packetLogFile(packetLogFilePath, std::ios::app);
+    if (!logFile || !packetLogFile) return;
 
     logFile << "[" << getCurrentTimeString() << "] [" << eventType << "]\n"
         << "  seqNum: " << pkt.seqNum << ", ackNum: " << pkt.ackNum << ", length: " << pkt.length << "\n"
         << "  data: " << pkt.data << "\n\n";
+
+    packetLogFile << pkt.toString() << std::endl;
 }
 
 void initLogFiles(bool isSender) {
     if (isSender) {
-    std::ofstream senderLog("log/sender.txt", std::ios::trunc);
+        std::ofstream senderLog("log/sender/event_log.txt", std::ios::trunc);
+        std::ofstream packetLog("log/sender/packet_log.txt", std::ios::trunc);
     } else {
-        std::ofstream receiverLog("log/receiver.txt", std::ios::trunc);
+        std::ofstream receiverLog("log/receiver/event_log.txt", std::ios::trunc);
+        std::ofstream packetLog("log/receiver/packet_log.txt", std::ios::trunc);
     }
 }
 

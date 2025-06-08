@@ -34,13 +34,9 @@ UDPSocket::~UDPSocket() {
 bool UDPSocket::bindSocket(int port) {
 
     addr.sin_family = AF_INET;
+    addr.sin_addr.s_addr = INADDR_ANY; // Bind to all interfaces
 
     addr.sin_port = htons(port);
-
-    if (inet_pton(AF_INET, "127.0.0.1", &(addr.sin_addr)) <= 0) {
-        perror("Invalid address or not supported.");
-        return false;
-    }
 
     if (bind(sockfd, (const struct sockaddr*)&addr, sizeof(addr)) < 0) {
         perror("Bind failed");

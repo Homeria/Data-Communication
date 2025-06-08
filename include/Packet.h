@@ -7,7 +7,7 @@
 #include <iomanip>
 #include <cstring>
 
-#define MAX_DATA_SIZE 51
+#define MAX_DATA_SIZE 1000
 
 enum PacketType {
     DATA = 0,
